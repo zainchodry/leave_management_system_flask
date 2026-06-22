@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}My Leaves{% endblock %}
+{% block page_title %}My Leave Requests{% endblock %}
+{% block breadcrumb %}Leave / My Requests{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><i class="fas fa-list-alt"></i> Leave History</div>
+    <a href="{{ url_for('leave.apply_leave') }}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus"></i> Apply Leave
+    </a>
+  </div>
+
+  {% if leaves %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Type</th><th>Start</th><th>End</th><th>Status</th><th>Remark</th><th>Applied</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for leave in leaves %}
+        <tr>
+          <td style="color:var(--text-muted)">{{ loop.index }}</td>
+          <td><span class="badge badge-leave">{{ leave.leave_type }}</span></td>
+          <td>{{ leave.start_date }}</td>
+          <td>{{ leave.end_date }}</td>
+          <td><span class="badge badge-{{ leave.status.lower() }}">{{ leave.status }}</span></td>
+          <td style="font-size:12px;color:var(--text-muted)">{{ leave.teacher_remark or '—' }}</td>
+          <td style="font-size:12px;color:var(--text-muted)">{{ leave.created_at.strftime('%d %b %Y') }}</td>
+          <td>
+            {% if leave.status == 'PENDING' %}
+            <a href="{{ url_for('leave.cancel_leave', id=leave.id) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Cancel this leave request?')">
+              <i class="fas fa-times"></i> Cancel
+            </a>
+            {% else %}
+            <span style="font-size:12px;color:var(--text-dim)">—</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-inbox"></i>
+    <p>You haven't applied for any leave yet</p>
+    <a href="{{ url_for('leave.apply_leave') }}" class="btn btn-primary">Apply for Leave</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

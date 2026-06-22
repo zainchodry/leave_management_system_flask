@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body{margin:0;padding:0;background:#0d1117;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0}
+    .wrap{max-width:520px;margin:40px auto;background:#161b22;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+    .header{padding:32px;text-align:center;background:{% if leave.status == 'APPROVED' %}linear-gradient(135deg,#68d391,#38a169){% else %}linear-gradient(135deg,#fc8181,#c53030){% endif %}}
+    .header h1{margin:0;font-size:22px;color:#fff;font-weight:700}
+    .status-badge{display:inline-block;padding:8px 24px;border-radius:20px;font-size:18px;font-weight:700;margin:16px 0;background:rgba(255,255,255,0.2);color:#fff}
+    .body{padding:32px}
+    .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px}
+    .info-row .label{color:#718096}
+    .info-row .value{font-weight:500}
+    .remark-box{background:rgba(255,255,255,0.04);border-radius:8px;padding:14px;margin-top:16px;font-size:14px;border-left:3px solid #63b3ed}
+    .footer{background:#0d1117;padding:16px 32px;text-align:center;font-size:12px;color:#4a5568;border-top:1px solid rgba(255,255,255,0.06)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div style="font-size:36px">{% if leave.status == 'APPROVED' %}✅{% else %}❌{% endif %}</div>
+      <h1>Leave Request {{ leave.status.capitalize() }}</h1>
+      <div class="status-badge">{{ leave.status }}</div>
+    </div>
+    <div class="body">
+      <p>Hi <strong>{{ student.username }}</strong>,</p>
+      <p>Your leave request has been reviewed. Here are the details:</p>
+
+      <div class="info-row"><span class="label">Leave Type</span><span class="value">{{ leave.leave_type }}</span></div>
+      <div class="info-row"><span class="label">Start Date</span><span class="value">{{ leave.start_date }}</span></div>
+      <div class="info-row"><span class="label">End Date</span><span class="value">{{ leave.end_date }}</span></div>
+      <div class="info-row"><span class="label">Status</span><span class="value">{{ leave.status }}</span></div>
+
+      {% if leave.teacher_remark %}
+      <div class="remark-box">
+        <strong style="font-size:12px;color:#718096;display:block;margin-bottom:4px">TEACHER'S REMARK</strong>
+        {{ leave.teacher_remark }}
+      </div>
+      {% endif %}
+
+      <p style="margin-top:20px;font-size:13px;color:#718096">
+        Log in to EduLeave to view more details or apply for another leave.
+      </p>
+    </div>
+    <div class="footer">© EduLeave — Student Leave Management System</div>
+  </div>
+</body>
+</html>

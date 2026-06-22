@@ -128,7 +128,8 @@ def update_department(id):
 
     return render_template(
         "departments/update.html",
-        form=form
+        form=form,
+        department=department
     )
 
 @department_bp.route(

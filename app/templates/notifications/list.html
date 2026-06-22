@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block breadcrumb %}Account / Notifications{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><i class="fas fa-bell"></i> All Notifications</div>
+    {% if notifications %}
+    <span class="badge badge-pending">{{ notifications|selectattr('is_read','equalto',False)|list|length }} unread</span>
+    {% endif %}
+  </div>
+
+  {% if notifications %}
+  <div style="display:flex;flex-direction:column;gap:8px">
+    {% for notif in notifications %}
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border-radius:10px;background:var(--bg-glass);border:1px solid {% if not notif.is_read %}rgba(99,179,237,0.3){% else %}var(--border){% endif %};border-left:4px solid {% if not notif.is_read %}var(--accent){% else %}var(--border){% endif %}">
+      <div style="width:36px;height:36px;border-radius:8px;background:{% if 'APPROVED' in notif.notification_type %}rgba(104,211,145,0.15){% elif 'REJECTED' in notif.notification_type %}rgba(252,129,129,0.15){% elif 'ATTENDANCE' in notif.notification_type %}rgba(118,228,247,0.15){% else %}rgba(99,179,237,0.15){% endif %};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="fas {% if 'APPROVED' in notif.notification_type %}fa-check-circle" style="color:var(--success){% elif 'REJECTED' in notif.notification_type %}fa-times-circle" style="color:var(--danger){% elif 'ATTENDANCE' in notif.notification_type %}fa-calendar-check" style="color:var(--info){% else %}fa-bell" style="color:var(--accent){% endif %}"></i>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:{% if not notif.is_read %}600{% else %}400{% endif %}">{{ notif.title }}</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:3px">{{ notif.message }}</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:6px">{{ notif.created_at.strftime('%d %b %Y, %I:%M %p') }}</div>
+      </div>
+      {% if not notif.is_read %}
+      <a href="{{ url_for('notification.mark_read', id=notif.id) }}" class="btn btn-ghost btn-sm" style="flex-shrink:0">
+        <i class="fas fa-check"></i> Mark Read
+      </a>
+      {% else %}
+      <span style="font-size:11px;color:var(--text-dim);flex-shrink:0">Read</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-bell-slash"></i>
+    <p>No notifications yet</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

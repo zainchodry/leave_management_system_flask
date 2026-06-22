@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body{margin:0;padding:0;background:#0d1117;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0}
+    .wrap{max-width:520px;margin:40px auto;background:#161b22;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+    .header{background:linear-gradient(135deg,#63b3ed,#9f7aea);padding:28px 32px;text-align:center}
+    .header h1{margin:0;font-size:20px;color:#fff;font-weight:700}
+    .body{padding:28px 32px}
+    .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px}
+    .label{color:#718096}.value{font-weight:500}
+    .footer{background:#0d1117;padding:14px 32px;text-align:center;font-size:12px;color:#4a5568;border-top:1px solid rgba(255,255,255,0.06)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div style="font-size:32px">📋</div>
+      <h1>New Leave Request</h1>
+    </div>
+    <div class="body">
+      <p>A student has submitted a leave request that requires your review:</p>
+      <div class="info-row"><span class="label">Student</span><span class="value">{{ student.username }}</span></div>
+      <div class="info-row"><span class="label">Email</span><span class="value">{{ student.email }}</span></div>
+      <div class="info-row"><span class="label">Leave Type</span><span class="value">{{ leave.leave_type }}</span></div>
+      <div class="info-row"><span class="label">Start Date</span><span class="value">{{ leave.start_date }}</span></div>
+      <div class="info-row"><span class="label">End Date</span><span class="value">{{ leave.end_date }}</span></div>
+      <div style="margin-top:16px;padding:12px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:14px">
+        <strong style="font-size:12px;color:#718096;display:block;margin-bottom:4px">REASON</strong>
+        {{ leave.reason }}
+      </div>
+      <p style="margin-top:20px;font-size:13px;color:#718096">Log in to EduLeave to review and respond to this request.</p>
+    </div>
+    <div class="footer">© EduLeave — Student Leave Management System</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Apply Leave{% endblock %}
+{% block page_title %}Apply for Leave{% endblock %}
+{% block breadcrumb %}Leave / Apply{% endblock %}
+
+{% block content %}
+<div style="max-width:560px">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><i class="fas fa-paper-plane"></i> New Leave Application</div>
+    </div>
+
+    <form method="POST" action="{{ url_for('leave.apply_leave') }}" novalidate>
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.leave_type.label(class="form-label") }}
+        {{ form.leave_type(class="form-control", id="leave_type") }}
+        {% for error in form.leave_type.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          {{ form.start_date.label(class="form-label") }}
+          {{ form.start_date(class="form-control", id="start_date") }}
+          {% for error in form.start_date.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.end_date.label(class="form-label") }}
+          {{ form.end_date(class="form-control", id="end_date") }}
+          {% for error in form.end_date.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+      </div>
+
+      <div class="form-group">
+        {{ form.reason.label(class="form-label") }}
+        {{ form.reason(class="form-control", placeholder="Explain the reason for your leave...", rows=4, id="reason") }}
+        {% for error in form.reason.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div style="display:flex;gap:10px">
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('leave.my_leaves') }}" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

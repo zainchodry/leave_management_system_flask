@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Attendance Statistics{% endblock %}
+{% block page_title %}Attendance Statistics{% endblock %}
+{% block breadcrumb %}Attendance / Statistics{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon blue"><i class="fas fa-database"></i></div>
+    <div><div class="stat-value">{{ total }}</div><div class="stat-label">Total Records</div></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green"><i class="fas fa-check"></i></div>
+    <div><div class="stat-value">{{ present }}</div><div class="stat-label">Present</div></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon red"><i class="fas fa-times"></i></div>
+    <div><div class="stat-value">{{ absent }}</div><div class="stat-label">Absent</div></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon orange"><i class="fas fa-calendar-minus"></i></div>
+    <div><div class="stat-value">{{ leave }}</div><div class="stat-label">On Leave</div></div>
+  </div>
+</div>
+
+{% if total > 0 %}
+<div class="card" style="max-width:500px">
+  <div class="card-title" style="margin-bottom:20px"><i class="fas fa-chart-bar"></i> Breakdown</div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="color:var(--success);font-size:13px">Present</span>
+        <span style="font-size:13px">{{ ((present/total)*100)|round(1) }}%</span>
+      </div>
+      <div style="background:var(--bg-glass);border-radius:6px;height:10px;overflow:hidden">
+        <div style="background:var(--success);height:100%;width:{{ ((present/total)*100)|round|int }}%;border-radius:6px"></div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="color:var(--danger);font-size:13px">Absent</span>
+        <span style="font-size:13px">{{ ((absent/total)*100)|round(1) }}%</span>
+      </div>
+      <div style="background:var(--bg-glass);border-radius:6px;height:10px;overflow:hidden">
+        <div style="background:var(--danger);height:100%;width:{{ ((absent/total)*100)|round|int }}%;border-radius:6px"></div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="color:var(--warning);font-size:13px">On Leave</span>
+        <span style="font-size:13px">{{ ((leave/total)*100)|round(1) }}%</span>
+      </div>
+      <div style="background:var(--bg-glass);border-radius:6px;height:10px;overflow:hidden">
+        <div style="background:var(--warning);height:100%;width:{{ ((leave/total)*100)|round|int }}%;border-radius:6px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

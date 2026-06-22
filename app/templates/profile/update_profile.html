@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Update Profile{% endblock %}
+{% block page_title %}Update Profile{% endblock %}
+{% block breadcrumb %}Account / Profile / Edit{% endblock %}
+
+{% block content %}
+<div style="max-width:540px">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><i class="fas fa-user-edit"></i> Edit Profile</div>
+    </div>
+    <form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data" novalidate>
+      {{ form.hidden_tag() }}
+
+      <!-- Current avatar preview -->
+      <div style="text-align:center;margin-bottom:20px">
+        {% if profile and profile.profile_picture %}
+        <img src="{{ url_for('static', filename=profile.profile_picture) }}"
+             id="avatar-preview"
+             style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--accent)">
+        {% else %}
+        <div id="avatar-preview" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;margin:0 auto">
+          {{ current_user.username[0].upper() }}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.profile_picture.label(class="form-label") }}
+        {{ form.profile_picture(class="form-control", id="profile_picture", accept="image/*") }}
+      </div>
+      <div class="form-group">
+        {{ form.phone_number.label(class="form-label") }}
+        {{ form.phone_number(class="form-control", placeholder="+1 234 567 8900", id="phone_number") }}
+      </div>
+      <div class="form-group">
+        {{ form.address.label(class="form-label") }}
+        {{ form.address(class="form-control", placeholder="Your address...", rows=2, id="address") }}
+      </div>
+      <div class="form-group">
+        {{ form.department.label(class="form-label") }}
+        {{ form.department(class="form-control", placeholder="e.g. Computer Science", id="department") }}
+      </div>
+      <div style="display:flex;gap:10px">
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('profile.profile') }}" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Live avatar preview
+  document.getElementById('profile_picture').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const preview = document.getElementById('avatar-preview');
+      if (preview.tagName === 'IMG') {
+        preview.src = ev.target.result;
+      } else {
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.id = 'avatar-preview';
+        img.style = 'width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--accent)';
+        preview.replaceWith(img);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+{% endblock %}

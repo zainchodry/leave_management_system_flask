@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Departments{% endblock %}
+{% block page_title %}Departments{% endblock %}
+{% block breadcrumb %}Admin / Departments{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><i class="fas fa-building"></i> All Departments</div>
+    {% if current_user.role == 'ADMIN' %}
+    <a href="{{ url_for('department.create_department') }}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus"></i> Add Department
+    </a>
+    {% endif %}
+  </div>
+  {% if departments %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Description</th><th>Head</th><th>Created</th>{% if current_user.role == 'ADMIN' %}<th>Actions</th>{% endif %}</tr>
+      </thead>
+      <tbody>
+        {% for dept in departments %}
+        <tr>
+          <td style="color:var(--text-muted)">{{ loop.index }}</td>
+          <td><strong>{{ dept.name }}</strong></td>
+          <td style="font-size:13px;color:var(--text-muted)">{{ dept.description or '—' }}</td>
+          <td style="font-size:13px">{{ dept.department_head.username if dept.department_head else '—' }}</td>
+          <td style="font-size:12px;color:var(--text-muted)">{{ dept.created_at.strftime('%d %b %Y') }}</td>
+          {% if current_user.role == 'ADMIN' %}
+          <td style="display:flex;gap:6px">
+            <a href="{{ url_for('department.update_department', id=dept.id) }}" class="btn btn-ghost btn-sm"><i class="fas fa-edit"></i></a>
+            <a href="{{ url_for('department.delete_department', id=dept.id) }}" class="btn btn-danger btn-sm"
+               onclick="return confirm('Delete {{ dept.name }}?')"><i class="fas fa-trash"></i></a>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-building"></i>
+    <p>No departments yet</p>
+    {% if current_user.role == 'ADMIN' %}
+    <a href="{{ url_for('department.create_department') }}" class="btn btn-primary">Create Department</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

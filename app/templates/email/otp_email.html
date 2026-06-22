@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body{margin:0;padding:0;background:#0d1117;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0}
+    .wrap{max-width:520px;margin:40px auto;background:#161b22;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+    .header{background:linear-gradient(135deg,#63b3ed,#9f7aea);padding:32px;text-align:center}
+    .header .icon{font-size:40px;margin-bottom:8px}
+    .header h1{margin:0;font-size:22px;color:#fff;font-weight:700}
+    .body{padding:32px}
+    .otp-box{background:rgba(99,179,237,0.1);border:2px dashed rgba(99,179,237,0.4);border-radius:12px;text-align:center;padding:24px;margin:24px 0}
+    .otp-code{font-size:40px;font-weight:800;letter-spacing:12px;color:#63b3ed;font-family:monospace}
+    .note{font-size:13px;color:#718096;margin-top:8px}
+    .warning{background:rgba(246,173,85,0.1);border-left:4px solid #f6ad55;padding:12px 16px;border-radius:6px;font-size:13px;color:#f6ad55;margin-top:16px}
+    .footer{background:#0d1117;padding:16px 32px;text-align:center;font-size:12px;color:#4a5568;border-top:1px solid rgba(255,255,255,0.06)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="icon">🔐</div>
+      <h1>Password Reset OTP</h1>
+    </div>
+    <div class="body">
+      <p>Hi <strong>{{ user.username }}</strong>,</p>
+      <p>We received a request to reset your EduLeave password. Use the OTP below to proceed:</p>
+
+      <div class="otp-box">
+        <div class="otp-code">{{ otp }}</div>
+        <div class="note">This code expires in <strong>{{ expiry_minutes }} minutes</strong></div>
+      </div>
+
+      <div class="warning">
+        ⚠️ If you didn't request this, you can safely ignore this email. Your password won't change.
+      </div>
+
+      <p style="margin-top:20px;font-size:13px;color:#718096">Never share this OTP with anyone, including EduLeave staff.</p>
+    </div>
+    <div class="footer">
+      © EduLeave — Student Leave Management System
+    </div>
+  </div>
+</body>
+</html>

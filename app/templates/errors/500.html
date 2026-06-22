@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}500 Server Error{% endblock %}
+
+{% block auth_content %}
+<div class="auth-page">
+  <div style="text-align:center">
+    <div style="font-size:80px;font-weight:800;background:linear-gradient(135deg,#f6ad55,#fc8181);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">500</div>
+    <h1 style="font-size:22px;margin:12px 0 8px">Internal Server Error</h1>
+    <p style="color:var(--text-muted);margin-bottom:24px">Something went wrong on our end. Please try again later.</p>
+    <a href="{{ url_for('dashboard.home') }}" class="btn btn-primary"><i class="fas fa-home"></i> Go to Dashboard</a>
+  </div>
+</div>
+{% endblock %}
